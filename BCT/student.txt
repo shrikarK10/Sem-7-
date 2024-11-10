@@ -1,0 +1,39 @@
+contract StudentContract{
+
+    struct Student{
+        string name;
+        uint age;
+        uint grade;
+    }
+
+    event StudentAdded(string name, uint age, uint grade);
+
+    constructor() payable{
+
+    }
+
+    Student[] public students;
+
+    function addStudent(string memory _name, uint _age ,  uint _grade) public {
+        students.push(Student(_name, _age, _grade));
+        emit StudentAdded(_name,_age,_grade);
+    }
+
+    function studentCount() public view returns(uint){
+        return students.length;
+    }
+
+    function studentAtIndex(uint index) public view returns (string memory name, uint age, uint grade) {
+        require(index <= students.length, "Student not found");
+        Student memory student = students[index];
+        return (student.name, student.age , student.grade);
+    }
+
+    fallback() external payable { 
+        revert("Function not found");
+    }
+
+    receive() external payable { 
+        
+    }
+}

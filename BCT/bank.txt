@@ -1,0 +1,64 @@
+
+
+contract Bank{
+
+    struct customer{
+
+        uint id;
+        string name;
+        uint balance;
+    }
+
+    
+
+    customer[] public cust;
+
+    event custadd(uint id,string name,uint balance);
+ 
+    function addcustomer(uint _id,string memory _name,uint _balance) public{
+
+        cust.push(customer(_id,_name,_balance));
+        emit custadd(_id, _name, _balance);
+    }
+
+    function deposit(uint _id,uint depositamount) public {
+
+        
+        for(uint i=0;i<cust.length;i++){
+        if(cust[i].id==_id)
+        {
+        cust[i].balance+=depositamount;
+        break;
+        }
+
+        }
+  
+    }
+
+    function withdraw(uint _id,uint withdrawamount) public {
+
+        
+        for(uint i=0;i<cust.length;i++){
+        if(cust[i].id==_id)
+        {
+        cust[i].balance-=withdrawamount;
+        break;
+        }
+
+        }
+    }
+
+    function showbalance(uint _id) public view returns(uint balance){
+
+        
+        for(uint i=0;i<cust.length;i++){
+        if(cust[i].id==_id)
+        {
+        return(cust[i].balance);
+        }
+
+        }
+    }
+
+    
+}
